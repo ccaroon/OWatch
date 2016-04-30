@@ -13,35 +13,39 @@ void setup() {
 
     clock = new OWatchClock(&display);
     clock->setTime(__TIME__);
+    clock->setDate(__DATE__);
 }
 
 void loop() {
-    // uint8_t buttonPressed = 0;
+    uint8_t buttonPressed = 0;
 
     // buttonPressed = display.getButtons(TSButtonUpperLeft);
-    // buttonPressed = display.getButtons();
-    // if (buttonPressed > 0) {
-    //     if (clock.getColor() == TS_8b_Green) {
-    //         clock.setColor(TS_8b_White);
-    //     } else {
-    //         clock.setColor(TS_8b_Green);
-    //     }
-    // }
+    buttonPressed = display.getButtons();
+    if (buttonPressed > 0) {
+        switch (buttonPressed) {
+            case 1:
+                clock->displayDate(true);
+                break;
+            case 2:
+                clock->setColor(TS_8b_Blue);
+                clock->displayTime(true);
+                break;
+            case 4:
+                clock->setColor(TS_8b_Green);
+                clock->displayTime(true);
+                break;
+            case 8:
+                clock->setColor(TS_8b_Yellow);
+                clock->displayTime(true);
+                break;
+        }
+        delay(250);
+    }
 
     // display.setCursor(1,1);
     // display.setFont(liberationSans_12ptFontInfo);
+    // display.print(millis()/1000);
 
     // display.print(__DATE__);
-
-    // uint8_t h,m,s;
-    // h = bob.getHours();
-    // m = bob.getMinutes();
-    // s = bob.getSeconds();
-    // char craig[9];
-    // sprintf(craig, "%02d:%02d:%02d", h,m,s);
-    // display.print(craig);
-
-    // display.print(buttonPressed);
-    clock->displayTime();
-    // delay(500);
+    clock->displayTime(false);
 }
